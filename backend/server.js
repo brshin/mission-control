@@ -6,6 +6,15 @@ const app = express();
 
 app.use(express.json());
 
+const fetchUpcomingLaunches = async() => {
+    const response = await fetch('https://ll.thespacedevs.com/2.3.0/launches/upcoming/');
+    const data = await response.json();
+
+    console.log(data);
+}
+
+fetchUpcomingLaunches();
+
 const connectDB = async() => {
     try {
         await mongoose.connect(process.env.MONGODB_URI);
