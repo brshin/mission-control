@@ -8,6 +8,12 @@ const app = express();
 
 app.use(express.json());
 
+app.get('/launches', async (req, res) => {
+    const launches = await Launch.find();
+
+    res.json(launches);
+})
+
 const fetchUpcomingLaunches = async() => {
     const response = await fetch('https://ll.thespacedevs.com/2.3.0/launches/upcoming/');
     const data = await response.json();
@@ -39,7 +45,7 @@ const saveData = async (data) => {
     };
 };
 
-fetchUpcomingLaunches();
+//fetchUpcomingLaunches();
 
 const connectDB = async() => {
     try {
