@@ -8,6 +8,14 @@ const app = express();
 
 app.use(express.json());
 
+// Redis Client Initializer
+const { createClient } = require('redis');
+
+const redisClient = createClient();
+redisClient.on('error', (err) => console.log('Redis Client Error', err));
+
+redisClient.connect().then(() => console.log('Connected to Redis'));
+
 app.get('/launches', async (req, res) => {
     const launches = await Launch.find();
 

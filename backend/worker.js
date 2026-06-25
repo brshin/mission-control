@@ -6,6 +6,14 @@ require('dotenv').config();
 
 const Launch = require('./models/Launch');
 
+// Redis Client Initializer
+const { createClient } = require('redis');
+
+const redisClient = createClient();
+redisClient.on('error', (err) => console.log('Redis Client Error', err));
+
+redisClient.connect().then(() => console.log('Connected to Redis'));
+
 const connectDB = async() => {
     try {
         await mongoose.connect(process.env.MONGODB_URI);
