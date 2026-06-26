@@ -33,7 +33,7 @@ app.get('/launches', async (req, res) => {
         const launches = await Launch.find();
         console.log("Cache miss - recieved from database instead");
 
-        await redisClient.setEx(cacheKey, 60, JSON.stringify(launches));
+        await redisClient.setEx(cacheKey, 120, JSON.stringify(launches));
 
         res.json(launches);
     }

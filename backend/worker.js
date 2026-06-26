@@ -36,6 +36,21 @@ const fetchUpcomingLaunches = async() => {
 
 const saveData = async (data) => {
     const launches = data.results;
+    
+    // Save to Redis
+    try {
+        const cacheKey = 'upcoming-launches';
+
+        await redisClient.setEx(cacheKey, 120, JSON.stringify(launches));
+        console.log("Saved upcoming-launches to Redis");
+    }
+    catch (error) {
+        console.error(error);
+    }
+
+
+
+    // MongoDB
 
     for (const launch of launches) {
         const filter = { apiId: launch.id };
