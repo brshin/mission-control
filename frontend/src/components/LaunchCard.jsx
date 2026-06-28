@@ -41,50 +41,56 @@ export default function LaunchCard({ launch }) {
 
                     <button 
                         onClick={() => setIsExpanded(!isExpanded)}
-                        className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded text-xs font-mono text-white uppercase tracking-widest transition-colors"
+                        className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded text-xs font-mono text-white uppercase tracking-widest transition-colors flex justify-between items-center px-4"
                     >
-                        {isExpanded ? 'Close' : 'More'}
+                        <span>{isExpanded ? 'Collapse Telemetry' : 'Expand Telemetry'}</span>
+                        <span className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}>
+                            ▼
+                        </span>
                     </button>
                 </div>
                 
 
 
             {/* Expanded Section */}
-            {isExpanded && (
-                <div className="px-6 pb-6 pt-2 border-t border-white/10 bg-black/50">
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                        <div>
-                            <h3 className="text-xs text-slate-500 uppercase font-mono mb-1">Launch Pad</h3>
-                            <p className="text-sm text-white">{launch.pad.name}</p>
+            <div className={`grid transition-[grid-template-rows] duration-500 ease-in-out ${isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                <div className="overflow-hidden">
+                    <div className="px-6 pb-6 pt-2 border-t border-white/10 bg-black/50">
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <h3 className="text-xs text-slate-500 uppercase font-mono mb-1">Launch Pad</h3>
+                                <p className="text-sm text-white">{launch.pad.name}</p>
+                            </div>
+                            <div>
+                                <h3 className="text-xs text-slate-500 uppercase font-mono mb-1">Window</h3>
+                                <p className="text-sm text-white break-words">
+                                    {launch.window_start ? new Date(launch.window_start).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'TBA'} - 
+                                    {launch.window_end ? new Date(launch.window_end).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'TBA'}
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 className="text-xs text-slate-500 uppercase font-mono mb-1">Window</h3>
-                            <p className="text-sm text-white break-words">
-                                {launch.window_start ? new Date(launch.window_start).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'TBA'} - 
-                                {launch.window_end ? new Date(launch.window_end).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'TBA'}
+
+                        <div className="bg-neutral-800 border border-white/5 p-4 rounded mb-4">
+                            <div className="flex justify-between items-center mb-2">
+                                <h3 className="text-sm font-bold text-blue-400 uppercase tracking-wider">
+                                    Mission: {launch.mission?.name || 'Classified'}
+                                </h3>
+                                <span className="text-[10px] font-mono text-slate-400 border border-slate-600 px-2 py-0.5 rounded">
+                                    {launch.mission?.orbit?.name || 'UNK ORBIT'}
+                                </span>
+                            </div>
+                            <p className="text-sm text-slate-300 leading-relaxed">
+                                {launch.mission?.description || 'No mission details available at this time.'}
                             </p>
                         </div>
-                    </div>
 
-                    <div className="bg-neutral-800 border border-white/5 p-4 rounded mb-4">
-                        <div className="flex justify-between items-center mb-2">
-                            <h3 className="text-sm font-bold text-blue-400 uppercase tracking-wider">
-                                Mission: {launch.mission?.name || 'Classified'}
-                            </h3>
-                            <span className="text-[10px] font-mono text-slate-400 border border-slate-600 px-2 py-0.5 rounded">
-                                {launch.mission?.orbit?.name || 'UNK ORBIT'}
-                            </span>
-                        </div>
-                        <p className="text-sm text-slate-300 leading-relaxed">
-                            {launch.mission?.description || 'No mission details available at this time.'}
+                        <p className="text-[10px] text-slate-600 font-mono text-right uppercase">
+                        Last Updated: {launch.last_updated ? new Date(launch.last_updated).toLocaleString() : 'N/A'}
                         </p>
                     </div>
-
-                    <p className="text-[10px] text-slate-600 font-mono text-right uppercase">
-                    Last Updated: {launch.last_updated ? new Date(launch.last_updated).toLocaleString() : 'N/A'}
-                    </p>
                 </div>
-            )}
+            </div>
+        
         </div>
     );
 }

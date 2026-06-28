@@ -22,7 +22,7 @@ export default function App() {
         </p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-start">
         {launches.map((launch) => (
           <LaunchCard key={launch.apiId} launch={launch} />
         ))}
