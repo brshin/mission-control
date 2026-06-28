@@ -55,7 +55,7 @@ const saveData = async (data) => {
     try {
         const cacheKey = 'upcoming-launches';
 
-        await redisClient.setEx(cacheKey, 120, JSON.stringify(launches));
+        await redisClient.setEx(cacheKey, 600, JSON.stringify(launches));
         console.log("Saved upcoming-launches to Redis");
     }
     catch (error) {
@@ -75,7 +75,7 @@ const saveData = async (data) => {
 };
 
 
-cron.schedule('* * * * *', async () => {
+cron.schedule('*/5 * * * *', async () => {
     console.log('Cron worker triggered!');
     fetchUpcomingLaunches();
 });
