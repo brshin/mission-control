@@ -112,7 +112,9 @@ export default function App() {
                 <button
                   key={launch.apiId || index}
                   onClick={() => setSelectedIndex(index)}
-                  className={`w-full text-left p-4 rounded-lg border transition-all duration-300 flex flex-col relative overflow-hidden group hover:translate-x-1 cursor-pointer ${
+                  // 1. shrink-0 added. 
+                  // 2. Padding is now responsive (smaller on mobile, standard on md screens)
+                  className={`w-full shrink-0 text-left py-2.5 px-3 md:py-3 md:px-4 rounded-lg border transition-all duration-300 flex flex-col relative overflow-hidden group hover:translate-x-1 cursor-pointer ${
                     selectedIndex === index 
                       ? 'bg-cyan-950/40 border-cyan-500/60 shadow-[inset_0_0_15px_rgba(34,211,238,0.15)]' 
                       : 'bg-black/20 border-cyan-900/30 hover:bg-cyan-900/20 hover:border-cyan-700/50'
@@ -120,10 +122,13 @@ export default function App() {
                 >
                   {selectedIndex === index && <div className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-400 shadow-[0_0_10px_#22d3ee]"></div>}
                   
-                  <span className="text-[10px] font-mono text-cyan-500 mb-1 tracking-widest group-hover:text-cyan-300 transition-colors">
+                  {/* Added leading-tight to fix the gap above the date, responsive text sizes */}
+                  <span className="text-[9px] md:text-[10px] leading-tight font-mono text-cyan-500 mb-1 tracking-widest group-hover:text-cyan-300 transition-colors">
                     {new Date(launch.net).toLocaleDateString()}
                   </span>
-                  <span className={`font-mono text-xs uppercase tracking-widest truncate transition-colors ${selectedIndex === index ? 'text-cyan-100 font-bold' : 'text-slate-400 group-hover:text-cyan-50'}`}>
+                  
+                  {/* Added block and leading-tight to perfectly center the bounding box of the text */}
+                  <span className={`block w-full font-mono text-[11px] md:text-xs leading-tight uppercase tracking-widest truncate transition-colors ${selectedIndex === index ? 'text-cyan-100 font-bold' : 'text-slate-400 group-hover:text-cyan-50'}`}>
                     {launch.name}
                   </span>
                 </button>
